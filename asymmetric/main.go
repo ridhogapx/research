@@ -13,7 +13,7 @@ var privByte, _ = hex.DecodeString("b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAA
 var privKey = ed25519.PrivateKey(privByte)
 var pubByte, _ = hex.DecodeString("AAAAC3NzaC1lZDI1NTE5AAAAIJfQPDw1q8jAUNfXzXVOfj7flQ0lPeot0CRxt5mLISti")
 var pubKey = ed25519.PublicKey(pubByte)
-var symmetricKey = []byte("84e79d7b-e588-4978-a67f-f577bd39fb3d")
+var symmetricKey, _ = hex.DecodeString("84e79d7b-e588-4978-a67f-f577bd39fb3d")
 
 func Encode() string {
 	payload := paseto.JSONToken{
@@ -54,9 +54,7 @@ func Symmetric() string {
 }
 
 func main() {
-	pubRaw := "AAAAC3NzaC1lZDI1NTE5AAAAIJfQPDw1q8jAUNfXzXVOfj7flQ0lPeot0CRxt5mLISti"
-	fmt.Printf("Raw Public: %v", len(pubRaw))
-	fmt.Printf("Public Key Length: %v \n", len(pubKey))
-	fmt.Printf("Public Key Length: %v \n", len(privKey))
+	token := Symmetric()
+	fmt.Println("Token:", token)
 
 }
