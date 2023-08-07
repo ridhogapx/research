@@ -1,6 +1,9 @@
 package main
 
-import "crypto/rand"
+import (
+	"crypto/rand"
+	"fmt"
+)
 
 const CHAR = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -16,4 +19,14 @@ func random(length int) (string, error) {
 	}
 
 	return string(b), nil
+}
+
+func main() {
+	ran, err := random(32)
+
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(ran)
 }
