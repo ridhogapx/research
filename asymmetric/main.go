@@ -8,7 +8,10 @@ import (
 func main() {
 	publicKey, privateKey, _ := ed25519.GenerateKey(nil)
 
-	fmt.Printf("Public Key: %v", publicKey)
-	fmt.Printf("Private Key: %v", privateKey)
+	pub := []byte(publicKey)
+	p := []byte(privateKey)
+
+	fmt.Printf("Public Key: %v \n", string(pub))
+	fmt.Printf("Private Key: %v \n", string(p))
 
 }
