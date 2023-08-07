@@ -55,13 +55,24 @@ func Symmetric() string {
 }
 
 func main() {
-	key := make([]byte, 32)
-	_, err := rand.Read(key)
+	pubkey := make([]byte, 32)
+	privKey := make([]byte, 64)
+
+	_, err := rand.Read(pubkey)
 
 	if err != nil {
 		panic(err)
 	}
 
-	toString := hex.EncodeToString(key)
-	fmt.Println(toString)
+	_, err = rand.Read(privKey)
+
+	if err != nil {
+		panic(err)
+	}
+
+	encodePub := hex.EncodeToString(pubkey)
+	encodePriv := hex.EncodeToString(privKey)
+
+	fmt.Printf("Public Key: %v \n", encodePub)
+	fmt.Printf("Private Key: %v \n", encodePriv)
 }
