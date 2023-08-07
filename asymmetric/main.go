@@ -33,7 +33,9 @@ func Encode() string {
 }
 
 func main() {
-	token := Encode()
+	pubRaw := "AAAAC3NzaC1lZDI1NTE5AAAAIJfQPDw1q8jAUNfXzXVOfj7flQ0lPeot0CRxt5mLISti"
+	fmt.Printf("Raw Public: %v", len(pubRaw))
+	fmt.Printf("Public Key Length: %v \n", len(pubKey))
+	fmt.Printf("Public Key Length: %v \n", len(privKey))
 
-	fmt.Println(token)
 }
