@@ -2,6 +2,7 @@ package main
 
 import (
 	"crypto/ed25519"
+	"crypto/rand"
 	"encoding/hex"
 	"fmt"
 	"time"
@@ -9,9 +10,9 @@ import (
 	"github.com/o1egl/paseto"
 )
 
-var privByte, _ = hex.DecodeString("b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZWQyNTUxOQAAACCX0Dw8NavIwFDX1811Tn4+35UNJT3qLdAkcbeZiyErYgAAAKh+4OANfuDgDQAAAAtzc2gtZWQyNTUxOQAAACCX0Dw8NavIwFDX1811Tn4+35UNJT3qLdAkcbeZiyErYgAAAED9XNY2RHnAGqv6gzGJ71SyjB5JWbiPxwJF5Rluc5nPupfQPDw1q8jAUNfXzXVOfj7flQ0lPeot0CRxt5mLIStiAAAAInJpZGhvZ2FweEByaWRob2dhcHgtQXNwaXJlLVIzLTEzMVQBAgM=")
+var privByte, _ = hex.DecodeString("57dc346a-f3ae-494b-942c-ef3b1fb70f07")
 var privKey = ed25519.PrivateKey(privByte)
-var pubByte, _ = hex.DecodeString("AAAAC3NzaC1lZDI1NTE5AAAAIJfQPDw1q8jAUNfXzXVOfj7flQ0lPeot0CRxt5mLISti")
+var pubByte, _ = hex.DecodeString("695e67dc-f3d9-46d6-ad1a-1b0d4b0bb70c")
 var pubKey = ed25519.PublicKey(pubByte)
 var symmetricKey, _ = hex.DecodeString("84e79d7b-e588-4978-a67f-f577bd39fb3d")
 
@@ -54,7 +55,13 @@ func Symmetric() string {
 }
 
 func main() {
-	token := Symmetric()
-	fmt.Println("Token:", token)
+	key := make([]byte, 32)
+	_, err := rand.Read(key)
 
+	if err != nil {
+		panic(err)
+	}
+
+	toString := hex.EncodeToString(key)
+	fmt.Println(toString)
 }
