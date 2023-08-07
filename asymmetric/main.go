@@ -13,6 +13,7 @@ var privByte, _ = hex.DecodeString("b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAA
 var privKey = ed25519.PrivateKey(privByte)
 var pubByte, _ = hex.DecodeString("AAAAC3NzaC1lZDI1NTE5AAAAIJfQPDw1q8jAUNfXzXVOfj7flQ0lPeot0CRxt5mLISti")
 var pubKey = ed25519.PublicKey(pubByte)
+var symmetricKey = []byte("84e79d7b-e588-4978-a67f-f577bd39fb3d")
 
 func Encode() string {
 	payload := paseto.JSONToken{
@@ -30,6 +31,26 @@ func Encode() string {
 		panic(err)
 	}
 	return token
+}
+
+func Symmetric() string {
+	now := time.Now()
+	exp := now.Add(24 * time.Hour)
+
+	jsonToken := paseto.JSONToken{
+		Expiration: exp,
+	}
+
+	jsonToken.Set("data", "Kumalala")
+
+	token, err := paseto.NewV1().Encrypt(symmetricKey, jsonToken, "Some footer")
+
+	if err != nil {
+		panic(err)
+	}
+
+	return token
+
 }
 
 func main() {
