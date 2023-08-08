@@ -10,9 +10,9 @@ import (
 	"github.com/o1egl/paseto"
 )
 
-var privByte, _ = hex.DecodeString("57dc346a-f3ae-494b-942c-ef3b1fb70f07")
+var privByte, _ = hex.DecodeString("275d307f075dcec1be9934a3d8fea24d62f1fcb445d7d44cb4d632a892283e50ece3386d8a511a903b7208d828059d0177fe66f98c9fa1eed562dd3b3846bb8f")
 var privKey = ed25519.PrivateKey(privByte)
-var pubByte, _ = hex.DecodeString("695e67dc-f3d9-46d6-ad1a-1b0d4b0bb70c")
+var pubByte, _ = hex.DecodeString("33b311fae5d4f4631f511bab8906afb8e6346a30df25e630b70fb4e8557b69e6")
 var pubKey = ed25519.PublicKey(pubByte)
 var symmetricKey, _ = hex.DecodeString("84e79d7b-e588-4978-a67f-f577bd39fb3d")
 
@@ -72,7 +72,10 @@ func main() {
 
 	encodePub := hex.EncodeToString(pubkey)
 	encodePriv := hex.EncodeToString(privKey)
+	token := Encode()
 
 	fmt.Printf("Public Key: %v \n", encodePub)
 	fmt.Printf("Private Key: %v \n", encodePriv)
+	fmt.Println("Token:", token)
+
 }
