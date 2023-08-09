@@ -6,13 +6,15 @@ import (
 	"log"
 
 	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	"github.com/golang-migrate/migrate/v4/source/iofs"
 )
 
+//go:embed data/*.sql
 var fs embed.FS
 
 func main() {
-	d, err := iofs.New(fs, "data/")
+	d, err := iofs.New(fs, "data")
 	if err != nil {
 		log.Fatal(err)
 	}
