@@ -19,7 +19,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	m, errD := migrate.NewWithSourceInstance("iofs", d, "postgres://root:root@localhost/cvz_auth?sslmode=disable")
+	m, errD := migrate.NewWithSourceInstance("iofs", d, "postgres://root:root@localhost:5434/cvz_auth?sslmode=disable")
 
 	if errD != nil {
 		log.Fatal(err)
