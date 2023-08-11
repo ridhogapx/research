@@ -36,3 +36,13 @@ class Order {
         return this._product
     }
 }
+
+const executor = () => {
+    const emitter = new EventEmitter()
+    const order = new OrderPublisherSubscriber(emitter)
+
+    order.subscribe('order-created', (order: any) => {
+        console.log('Order created', {...order, status: 'created' })
+    })
+
+}
