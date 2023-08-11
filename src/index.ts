@@ -44,6 +44,7 @@ class Order {
     }
 }
 
+// Adding executor
 const executor = () => {
     const emitter = new EventEmitter()
     const order = new OrderPublisherSubscriber(emitter)
