@@ -11,10 +11,17 @@ type OrderEvent = 'order-created' | 'order-paid'
 
 class OrderPublisherSubscriber implements ISubscribe {
     constructor(private readonly emitter: EventEmitter) {}
+
     subscribe(event: string, executor: (payload: any) => any): this {
         this.emitter.on(event, executor)
         return this
-    }   
+    }
+
+    publish(event: OrderEvent | (string & {}), payload: any): this {
+        this.emitter.emit(event, payload)
+        return this
+    }
+
 }
 
 class Order {
