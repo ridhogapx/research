@@ -1,5 +1,6 @@
 import { EventEmitter } from "stream"
 
+// Contract for later use
 interface ISubscribe {
     subscribe(
         event: string,
