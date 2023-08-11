@@ -56,5 +56,8 @@ const executor = () => {
         console.log('Order paid', {...order, status: 'paid'})
         order.publish('order-finished', order)
     })
+    .subscribe('order-finished', (order: any) => {
+        console.log('Order finished', {...order, status: 'finished'})
+    })
 
 }
