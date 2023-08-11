@@ -23,4 +23,16 @@ class Order {
     private readonly _name: string,
     private readonly _product: string,    
     ) {}
+
+    get id() {
+        return this._id
+    }
+
+    get name() {
+        return this._name
+    }
+
+    get product() {
+        return this._product
+    }
 }
