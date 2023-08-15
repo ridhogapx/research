@@ -2,7 +2,7 @@ package main
 
 type Order interface {
 	CallWaiter(msg string)
-	MakeCoffee()
+	MakeCoffee() Coffee
 }
 
 type Customer struct {
