@@ -53,6 +53,11 @@ func (e Event) Start() {
 }
 
 func main() {
-	e := InitializeEvent()
+	e, err := InitializeEvent()
+
+	if err != nil {
+		fmt.Println("Failed to create an event", err)
+	}
+
 	e.Start()
 }
