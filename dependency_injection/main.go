@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"time"
 )
 
 type Message string
@@ -21,7 +22,13 @@ func NewMessage() Message {
 }
 
 func NewGreeter(m Message) Greeter {
-	return Greeter{Message: m}
+	var grumpy bool
+
+	if time.Now().Unix()%2 == 0 {
+		grumpy = true
+	}
+
+	return Greeter{Message: m, Grumpy: grumpy}
 }
 
 func NewEvent(g Greeter) (Event, error) {
