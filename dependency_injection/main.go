@@ -40,6 +40,10 @@ func NewEvent(g Greeter) (Event, error) {
 }
 
 func (g Greeter) Greet() Message {
+	if g.Grumpy {
+		return Message("Go away")
+	}
+
 	return g.Message
 }
 
