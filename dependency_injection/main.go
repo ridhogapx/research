@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type Message string
 
@@ -10,6 +13,7 @@ type Event struct {
 
 type Greeter struct {
 	Message Message
+	Grumpy  bool
 }
 
 func NewMessage() Message {
@@ -20,8 +24,12 @@ func NewGreeter(m Message) Greeter {
 	return Greeter{Message: m}
 }
 
-func NewEvent(g Greeter) Event {
-	return Event{Greeter: g}
+func NewEvent(g Greeter) (Event, error) {
+	if g.Grumpy {
+		return Event{}, errors.New("error event greeter is grumpy")
+	}
+
+	return Event{Greeter: g}, nil
 }
 
 func (g Greeter) Greet() Message {
@@ -34,9 +42,6 @@ func (e Event) Start() {
 }
 
 func main() {
-	message := NewMessage()
-	greeter := NewGreeter(message)
-	event := NewEvent(greeter)
-
-	event.Start()
+	e := InitializeEvent()
+	e.Start()
 }
