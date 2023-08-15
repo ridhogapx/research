@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/google/wire"
+)
 
 type Order interface {
 	CallWaiter(msg string)
@@ -36,4 +40,9 @@ func (customer *Customer) MakeCoffee() *Coffee {
 
 func (customer *Customer) Start() {
 	fmt.Printf("Customer %v ordering some coffee!", customer.Name)
+}
+
+func InitializeCoffee(string) *Customer {
+	wire.Build(NewCustomer)
+	return &Customer{}
 }
