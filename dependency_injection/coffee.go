@@ -5,6 +5,7 @@ import "fmt"
 type Order interface {
 	CallWaiter(msg string)
 	MakeCoffee() *Coffee
+	Start()
 }
 
 type Customer struct {
@@ -31,4 +32,8 @@ func (customer *Customer) MakeCoffee() *Coffee {
 		Name:     "Caffuchino",
 		Quantity: 1,
 	}
+}
+
+func (customer *Customer) Start() {
+	fmt.Printf("Customer %v ordering some coffee!", customer.Name)
 }
