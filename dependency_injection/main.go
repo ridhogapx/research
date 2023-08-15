@@ -59,5 +59,8 @@ func main() {
 		fmt.Println("Failed to create an event", err)
 	}
 
+	c := InitializeCoffee("John")
+
 	e.Start()
+	c.Start()
 }

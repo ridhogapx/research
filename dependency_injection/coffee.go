@@ -22,27 +22,27 @@ type Coffee struct {
 }
 
 func NewCustomer(name string) Order {
-	return &Customer{
+	return Customer{
 		Name: name,
 	}
 }
 
-func (customer *Customer) CallWaiter(msg string) {
+func (customer Customer) CallWaiter(msg string) {
 	fmt.Println("Excuse me, may i order some coffee?")
 }
 
-func (customer *Customer) MakeCoffee() *Coffee {
+func (customer Customer) MakeCoffee() *Coffee {
 	return &Coffee{
 		Name:     "Caffuchino",
 		Quantity: 1,
 	}
 }
 
-func (customer *Customer) Start() {
+func (customer Customer) Start() {
 	fmt.Printf("Customer %v ordering some coffee!", customer.Name)
 }
 
-func InitializeCoffee(string) *Customer {
+func InitializeCoffee(string) Customer {
 	wire.Build(NewCustomer)
-	return &Customer{}
+	return Customer{}
 }
