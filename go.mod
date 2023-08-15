@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/golang-migrate/migrate/v4 v4.16.2
+	github.com/google/wire v0.5.0
 	github.com/o1egl/paseto v1.0.0
 )
 
