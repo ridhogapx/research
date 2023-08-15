@@ -32,3 +32,11 @@ func (e Event) Start() {
 	msg := e.Greeter.Greet()
 	fmt.Println(msg)
 }
+
+func main() {
+	message := NewMessage()
+	greeter := NewGreeter(message)
+	event := NewEvent(greeter)
+
+	event.Start()
+}
