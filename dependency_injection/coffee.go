@@ -13,3 +13,9 @@ type Coffee struct {
 	Name     string
 	Quantity int8
 }
+
+func NewCustomer(name string) *Customer {
+	return &Customer{
+		Name: name,
+	}
+}
