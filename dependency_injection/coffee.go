@@ -61,7 +61,7 @@ func (order OrderCoffee) Start() {
 	fmt.Printf("Customer %v ordering %v...", order.Coffee, order.Coffee)
 }
 
-func InitializeCoffee(string) Customer {
+func InitializeCoffee(string) OrderCoffee {
 	wire.Build(NewCoffee, NewCustomer, NewOrderCoffee)
-	return Customer{}
+	return OrderCoffee{}
 }
