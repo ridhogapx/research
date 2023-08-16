@@ -1,6 +1,8 @@
 package main
 
-import "github.com/stretchr/testify/mock"
+import (
+	"github.com/stretchr/testify/mock"
+)
 
 type Customer struct {
 	Name string
@@ -19,7 +21,15 @@ type MockCoffee struct {
 	Mock mock.Mock
 }
 
-func (m *MockCoffee) NewComer(name string) Customer {
+type Result struct {
+	Coffee MockCoffee
+}
+
+func (m *MockCoffee) NewComer(name string) string {
 	args := m.Mock.Called(name)
-	return args.Get(0).(Customer)
+	return args.String()
+}
+
+func Logging(res *Result) {
+
 }
