@@ -27,7 +27,7 @@ type Coffee struct {
 	Owner    string
 }
 
-func NewCustomer(name string) Order {
+func NewCustomer(name string) Customer {
 	return Customer{
 		Name: name,
 	}
@@ -41,19 +41,19 @@ func NewCoffee(customer Customer) Coffee {
 	}
 }
 
-func (customer Customer) CallWaiter(msg string) {
+func (order OrderCoffee) CallWaiter(msg string) {
 	fmt.Println("Excuse me, may i order some coffee?")
 }
 
-func (customer Customer) MakeCoffee() *Coffee {
+func (order OrderCoffee) MakeCoffee() *Coffee {
 	return &Coffee{
 		Name:     "Caffuchino",
 		Quantity: 1,
 	}
 }
 
-func (customer Customer) Start() {
-	fmt.Printf("Customer %v ordering some coffee!", customer.Name)
+func (order OrderCoffee) Start() {
+	fmt.Printf("Customer %v ordering %v...", order.Coffee, order.Coffee)
 }
 
 func InitializeCoffee(string) Customer {
