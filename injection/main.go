@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type Cafe interface {
 	Order() Coffee
 	PayBill(int32) bool
@@ -36,4 +38,13 @@ func (customer Customer) Order() Coffee {
 
 func (Customer) PayBill(cost int32) bool {
 	return true
+}
+
+func main() {
+	customer := NewCustomer("Herry")
+	order := customer.Order()
+
+	fmt.Println(order.Name)
+	fmt.Println(order.Owner)
+
 }
