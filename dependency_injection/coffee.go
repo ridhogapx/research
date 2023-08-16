@@ -24,7 +24,6 @@ type Customer struct {
 type Coffee struct {
 	Name     string
 	Quantity int8
-	Owner    string
 }
 
 func NewCustomer(name string) Customer {
@@ -37,7 +36,13 @@ func NewCoffee(customer Customer) Coffee {
 	return Coffee{
 		Name:     "Caffuchino",
 		Quantity: 1,
-		Owner:    customer.Name,
+	}
+}
+
+func NewOrderCoffee(customer Customer, coffee Coffee) Order {
+	return &OrderCoffee{
+		Customer: customer.Name,
+		Coffee:   coffee.Name,
 	}
 }
 
