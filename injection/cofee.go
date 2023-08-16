@@ -19,3 +19,21 @@ type Bill struct {
 	Cost   int32
 	Coffee Coffee
 }
+
+func NewCustomer(name string) Cafe {
+	return Customer{
+		Name: name,
+	}
+}
+
+func (customer Customer) Order() Coffee {
+	return Coffee{
+		Name:      "Italiano",
+		Quanntity: 1,
+		Owner:     customer,
+	}
+}
+
+func (Customer) PayBill(cost int32) bool {
+	return true
+}
