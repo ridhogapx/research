@@ -62,6 +62,6 @@ func (order OrderCoffee) Start() {
 }
 
 func InitializeCoffee(string) Customer {
-	wire.Build(NewCustomer)
+	wire.Build(NewCoffee, NewCustomer, NewOrderCoffee)
 	return Customer{}
 }
