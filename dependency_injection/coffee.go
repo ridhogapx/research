@@ -12,6 +12,11 @@ type Order interface {
 	Start()
 }
 
+type OrderCoffee struct {
+	Customer string
+	Coffee   string
+}
+
 type Customer struct {
 	Name string
 }
