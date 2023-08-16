@@ -47,5 +47,5 @@ func NewOrder(coffee Coffee) Order {
 }
 
 func (order Order) Ordering() {
-	fmt.Printf("%v ordering %v to %v", order.Coffee.Owner, order.Coffee.Name, order.Waiter)
+	fmt.Printf("%v ordering %v to %v \n", order.Coffee.Owner, order.Coffee.Name, order.Waiter)
 }
