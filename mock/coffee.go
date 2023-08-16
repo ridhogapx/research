@@ -1,5 +1,7 @@
 package main
 
+import "github.com/stretchr/testify/mock"
+
 type Customer struct {
 	Name string
 }
@@ -11,5 +13,13 @@ type Coffee struct {
 
 type Order interface {
 	NewComer(name string) Customer
-	OrderCoffee() Coffee
+}
+
+type MockCoffee struct {
+	Mock mock.Mock
+}
+
+func (m *MockCoffee) NewComer(name string) Customer {
+	args := m.Mock.Called(name)
+	return args.Get(0).(Customer)
 }
