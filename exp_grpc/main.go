@@ -14,6 +14,20 @@ type Server struct {
 	proto.UnimplementedGreeterServer
 }
 
+func (s *Server) SayHello(req *proto.HelloRequest, stream proto.Greeter_SayHelloServer) error {
+	someone := req.Name
+
+	err := stream.Send(&proto.HelloResponse{
+		Message: fmt.Sprintf("Keep it up! %s", someone),
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	return nil
+}
+
 func main() {
 	lis, err := net.Listen("tcp", addr)
 

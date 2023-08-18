@@ -12,9 +12,9 @@ const options = {
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, options);
 
-const greeter = grpc.loadPackageDefinition(packageDefinition).proto.Greeter;
+const proto = grpc.loadPackageDefinition(packageDefinition).proto;
 
-const client = new greeter(
+const client = new proto.Greeter(
     "0.0.0.0:50051",
     grpc.credentials.createInsecure()
 );
@@ -22,4 +22,8 @@ const client = new greeter(
 const stream = client.SayHello({name: "Budi"});
 stream.on("data", data => {
     console.log(data);
+})
+
+stream.on("end", () => {
+    console.log("Completed...")
 })
