@@ -2,7 +2,7 @@ const path = require('path');
 const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 
-const PROTO_PATH = path.resolve(__dirname, "auth.proto");
+const PROTO_PATH = path.resolve(__dirname, "../auth.proto");
 
 const options = {
     keepCase: true,
