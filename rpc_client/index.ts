@@ -24,6 +24,6 @@ client.SignUp({
     email: "fromjs@dev.com",
     password: "12345"
 }, (err: any, result: any) => {
-    if(err) console.log(err);
+    if(err) throw new Error(err);
     console.log(result);
 })
