@@ -10,6 +10,10 @@ import (
 
 var addr = "0.0.0.0:50051"
 
+type Server struct {
+	proto.UnimplementedGreeterServer
+}
+
 func main() {
 	lis, err := net.Listen("tcp", addr)
 
