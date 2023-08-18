@@ -20,3 +20,10 @@ const client = new proto.AuthService(
     grpc.credentials.createInsecure()
 )
 
+client.SignUp({
+    email: "fromjs@dev.com",
+    password: "12345"
+}, (err: any, result: any) => {
+    if(err) console.log(err);
+    console.log(result);
+})
