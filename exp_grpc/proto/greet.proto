@@ -13,5 +13,5 @@ message HelloResponse {
 }
 
 service Greeter {
-    rpc SayHello(HelloRequest) returns (HelloResponse) {}
+    rpc SayHello(HelloRequest) returns (stream HelloResponse) {}
 }
