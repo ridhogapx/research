@@ -55,7 +55,7 @@ func getUserInfo(state string, code string) ([]byte, error) {
 	res, err := http.Get("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + token.AccessToken)
 
 	if err != nil {
-		return nil, errors.New("Failed getting user info")
+		return nil, errors.New("failed getting user info")
 	}
 
 	defer res.Body.Close()
