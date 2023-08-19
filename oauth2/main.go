@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -17,7 +18,7 @@ func init() {
 		RedirectURL:  "localhost:8080/callback",
 		ClientID:     "60848798350-v9dqmsun419pgk5ie3tj6hlk7hn8uqbu.apps.googleusercontent.com",
 		ClientSecret: "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",
-		Scopes:       []string{"http://www.googleapis.com/auth/userinfo.email"},
+		Scopes:       []string{"https://www.googleapis.com/auth/blogger"},
 		Endpoint:     google.Endpoint,
 	}
 }
@@ -33,34 +34,46 @@ func main() {
 }
 
 func handleGoogleLogin(w http.ResponseWriter, r *http.Request) {
-	url := oauthConfig.AuthCodeURL(randStateString)
+	url := oauthConfig.AuthCodeURL("state")
+	fmt.Println("Visit url:", url)
 	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
 }
 
 func handleCallbackGoogle(w http.ResponseWriter, r *http.Request) {
+	content, err := getUserInfo(r.FormValue("state"), r.FormValue("code"))
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("Content: %v", content)
 
 }
 
 func getUserInfo(state string, code string) ([]byte, error) {
 	if state != randStateString {
-		return nil, errors.New("invalid oauth stae!")
+		return nil, errors.New("invalid oauth state" + state)
 	}
 
-	token, err := oauthConfig.Exchange(oauth2.NoContext, code)
+	token, err := oauthConfig.Exchange(context.Background(), code)
 
 	if err != nil {
 		return nil, errors.New("code exchange failed")
 	}
 
-	res, err := http.Get("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + token.AccessToken)
+	oauthGoogleUrlAPI := "https://www.googleapis.com/oauth2/v2/userinfo?access_token="
+
+	client := oauthConfig.Client(context.Background(), token)
+
+	response, err := client.Get(oauthGoogleUrlAPI + token.AccessToken)
 
 	if err != nil {
 		return nil, errors.New("failed getting user info")
 	}
 
-	defer res.Body.Close()
-
-	contents, err := ioutil.ReadAll(res.Body)
+	defer response.Body.Close()
+	contents, err := ioutil.ReadAll(response.Body)
 
 	if err != nil {
 		return nil, errors.New("failed reading response body")
