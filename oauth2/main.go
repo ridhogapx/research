@@ -1,6 +1,9 @@
 package main
 
 import (
+	"fmt"
+	"net/http"
+
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )
@@ -15,4 +18,16 @@ func init() {
 		Scopes:       []string{"http://www.googleapis.com/auth/userinfo.email"},
 		Endpoint:     google.Endpoint,
 	}
+}
+
+func main() {
+	http.HandleFunc("/login", handleGoogleLogin)
+	fmt.Println("Server running on port 8080")
+	http.ListenAndServe(":8080", nil)
+}
+
+func handleGoogleLogin(w http.ResponseWriter, r *http.Request) {
+	randStateString := "asdasdlkajsdfkasjdfvn,mn@#@$"
+	url := oauthConfig.AuthCodeURL(randStateString)
+	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
 }
