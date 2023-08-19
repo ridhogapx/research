@@ -1,7 +1,9 @@
 package main
 
 import (
+	"errors"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 
 	"golang.org/x/oauth2"
@@ -20,14 +22,50 @@ func init() {
 	}
 }
 
+var randStateString = "asdasdlkajsdfkasjdfvn,mn@#@$"
+
 func main() {
 	http.HandleFunc("/login", handleGoogleLogin)
+	http.HandleFunc("/callback", handleCallbackGoogle)
+
 	fmt.Println("Server running on port 8080")
 	http.ListenAndServe(":8080", nil)
 }
 
 func handleGoogleLogin(w http.ResponseWriter, r *http.Request) {
-	randStateString := "asdasdlkajsdfkasjdfvn,mn@#@$"
 	url := oauthConfig.AuthCodeURL(randStateString)
 	http.Redirect(w, r, url, http.StatusTemporaryRedirect)
+}
+
+func handleCallbackGoogle(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func getUserInfo(state string, code string) ([]byte, error) {
+	if state != randStateString {
+		return nil, errors.New("invalid oauth stae!")
+	}
+
+	token, err := oauthConfig.Exchange(oauth2.NoContext, code)
+
+	if err != nil {
+		return nil, errors.New("code exchange failed")
+	}
+
+	res, err := http.Get("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + token.AccessToken)
+
+	if err != nil {
+		return nil, errors.New("Failed getting user info")
+	}
+
+	defer res.Body.Close()
+
+	contents, err := ioutil.ReadAll(res.Body)
+
+	if err != nil {
+		return nil, errors.New("failed reading response body")
+	}
+
+	return contents, nil
+
 }
