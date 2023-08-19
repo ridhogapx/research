@@ -20,15 +20,11 @@ const client = new proto.AuthService(
     grpc.credentials.createInsecure()
 )
 
-const stream = client.SignUp({
+const call = client.SignUp({
     email: "devnodejs@mail.com",
     password: "qweasdxzc"
-}, (err: any, res: any) => {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log(res);
-    }
+})
 
-
+call.on("data", (res: any) => {
+    console.log(res);
 })

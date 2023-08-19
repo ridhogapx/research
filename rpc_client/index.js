@@ -13,14 +13,10 @@ const options = {
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, options);
 const proto = grpc.loadPackageDefinition(packageDefinition).proto;
 const client = new proto.AuthService("localhost:50051", grpc.credentials.createInsecure());
-const stream = client.SignUp({
+const call = client.SignUp({
     email: "devnodejs@mail.com",
     password: "qweasdxzc"
-}, (err, res) => {
-    if (err) {
-        console.log(err);
-    }
-    else {
-        console.log(res);
-    }
+});
+call.on("data", (res) => {
+    console.log(res);
 });
