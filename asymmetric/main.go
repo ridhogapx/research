@@ -2,8 +2,8 @@ package main
 
 import (
 	"crypto/ed25519"
-	"crypto/rand"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"time"
 
@@ -15,6 +15,11 @@ var privKey = ed25519.PrivateKey(privByte)
 var pubByte, _ = hex.DecodeString("33b311fae5d4f4631f511bab8906afb8e6346a30df25e630b70fb4e8557b69e6")
 var pubKey = ed25519.PublicKey(pubByte)
 var symmetricKey, _ = hex.DecodeString("84e79d7b-e588-4978-a67f-f577bd39fb3d")
+
+type Result struct {
+	Data string `json:"data"`
+	Exp  string `json:"exp"`
+}
 
 func Encode() string {
 	payload := paseto.JSONToken{
@@ -54,28 +59,27 @@ func Symmetric() string {
 
 }
 
+func Decoder(token string) {
+	var newJsonToken paseto.JSONToken
+	var newFooter string
+
+	err := paseto.NewV1().Decrypt(token, symmetricKey, &newJsonToken, &newFooter)
+
+	if err != nil {
+		panic(err)
+	}
+
+	m, _ := json.Marshal(newJsonToken)
+
+	var result Result
+	json.Unmarshal(m, &result)
+	fmt.Println("Data: ", result.Data)
+
+}
+
 func main() {
-	pubkey := make([]byte, 32)
-	privKey := make([]byte, 64)
+	token := Symmetric()
 
-	_, err := rand.Read(pubkey)
-
-	if err != nil {
-		panic(err)
-	}
-
-	_, err = rand.Read(privKey)
-
-	if err != nil {
-		panic(err)
-	}
-
-	encodePub := hex.EncodeToString(pubkey)
-	encodePriv := hex.EncodeToString(privKey)
-	token := Encode()
-
-	fmt.Printf("Public Key: %v \n", encodePub)
-	fmt.Printf("Private Key: %v \n", encodePriv)
-	fmt.Println("Token:", token)
+	Decoder(token)
 
 }
