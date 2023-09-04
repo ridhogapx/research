@@ -74,12 +74,14 @@ func Decoder(token string) {
 	var result Result
 	json.Unmarshal(m, &result)
 	fmt.Println("Data: ", result.Data)
+	fmt.Println("Expired: ", result.Exp)
 
 }
 
 func main() {
 	token := Symmetric()
-
 	Decoder(token)
+
+	fmt.Println(token)
 
 }
