@@ -27,5 +27,18 @@ func main() {
 		})
 	})
 
+	r.GET("/delete", func(ctx *gin.Context) {
+		q := "DELETE from cvz_users"
+		_, err := DB.Query(q)
+
+		if err != nil {
+			panic(err)
+		}
+
+		ctx.JSON(200, gin.H{
+			"message" : "Success deleting!",
+		})
+	})
+
 	r.Run(":8080")
 }
