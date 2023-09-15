@@ -20,10 +20,18 @@ func main() {
       val := s[i]
       fmt.Printf("%v Value: %v \n", i, val)
     }(i)
+
   }
+  // doLoop(i)
 
   wg.Wait()
 
   fmt.Println("finished loop...")
 
+}
+
+func doLoop(i int) {
+  var wg sync.WaitGroup
+  defer wg.Done()
+  fmt.Println(i)
 }
