@@ -59,7 +59,7 @@ func main() {
     handler = rateLimitter(handler)
 
     server := new(http.Server)
-    server.Addr = "8080"
+    server.Addr = ":3000"
     server.Handler = handler
     
     server.ListenAndServe()
