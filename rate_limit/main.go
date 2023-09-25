@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+
+	"golang.org/x/time/rate"
 )
 
 type Message struct {
@@ -25,6 +27,27 @@ func endpointHandler(w http.ResponseWriter, request *http.Request) {
       return
     }
 }
+
+func rateLimitter(next func(w http.ResponseWriter, r *http.Request)) http.Handler {
+    limiter := rate.NewLimiter(2, 4)
+    
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+      if !limiter.Allow() {
+        message := Message{
+          Status: "Failed",
+          Body: "The API is hitting Rate Limit, please try again later",
+        }
+
+        w.WriteHeader(http.StatusTooManyRequests)   
+        json.NewEncoder(w).Encode(&message)
+        return
+      } else {
+        next(w, r)
+      } 
+    })
+    
+}
+
 
 func main() {
     fmt.Println("Server is running")  
