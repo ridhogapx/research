@@ -1,6 +1,10 @@
 package main
 
-import "net/http"
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+)
 
 type Message struct {
   Status string `json:"status"`
@@ -14,8 +18,19 @@ func endpointHandler(w http.ResponseWriter, request *http.Request) {
       Status: "Successfull",
       Body: "Hi! You've reaced API!",
     }
+
+    err := json.NewEncoder(w).Encode(&msg)
+
+    if err != nil {
+      return
+    }
 }
 
 func main() {
+    http.HandleFunc("/ping", endpointHandler)
+    err := http.ListenAndServe(":8080", nil)
 
+    if err != nil {
+      fmt.Println("Failed to listen server in port 8080")
+    }
 }
