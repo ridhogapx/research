@@ -27,10 +27,14 @@ func endpointHandler(w http.ResponseWriter, request *http.Request) {
 }
 
 func main() {
+    fmt.Println("Server is running")  
+
     http.HandleFunc("/ping", endpointHandler)
     err := http.ListenAndServe(":8080", nil)
 
     if err != nil {
       fmt.Println("Failed to listen server in port 8080")
     }
+
+    
 }
