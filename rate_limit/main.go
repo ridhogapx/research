@@ -16,7 +16,7 @@ func endpointHandler(w http.ResponseWriter, request *http.Request) {
     w.WriteHeader(200)
     msg := Message{
       Status: "Successfull",
-      Body: "Hi! You've reaced API!",
+      Body: "Hi! You've reached API!",
     }
 
     err := json.NewEncoder(w).Encode(&msg)
