@@ -13,7 +13,7 @@ type Message struct {
   Body string `json:"body"`
 }
 
-func endpointHandler(w http.ResponseWriter, request *http.Request) {
+func endpointHandler(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "application/json")
     w.WriteHeader(200)
     msg := Message{
@@ -28,7 +28,7 @@ func endpointHandler(w http.ResponseWriter, request *http.Request) {
     }
 }
 
-func rateLimitter(next func(w http.ResponseWriter, r *http.Request)) http.Handler {
+func rateLimitter(next http.Handler) http.Handler {
     limiter := rate.NewLimiter(2, 4)
     
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -42,22 +42,27 @@ func rateLimitter(next func(w http.ResponseWriter, r *http.Request)) http.Handle
         json.NewEncoder(w).Encode(&message)
         return
       } else {
-        next(w, r)
+        next.ServeHTTP(w, r)
       } 
     })
     
 }
 
-
 func main() {
-    fmt.Println("Server is running")  
+    fmt.Println("Server is running") 
+  
+    mux := http.DefaultServeMux
 
-    http.HandleFunc("/ping", endpointHandler)
-    err := http.ListenAndServe(":8080", nil)
+    mux.HandleFunc("/", endpointHandler)
 
-    if err != nil {
-      fmt.Println("Failed to listen server in port 8080")
-    }
+    var handler http.Handler = mux
+    handler = rateLimitter(handler)
+
+    server := new(http.Server)
+    server.Addr = "8080"
+    server.Handler = handler
+    
+    server.ListenAndServe()
 
     
 }
